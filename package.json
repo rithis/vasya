@@ -1,0 +1,10 @@
+{
+    "name": "vasya",
+    "version": "0.0.0",
+    "description": "Skype Chat Bot",
+    "dependencies": {
+        "hubot": "~2.4",
+        "hubot-skype": "~0.0",
+        "underscore": "~1.4"
+    }
+}
