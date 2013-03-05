@@ -1,26 +1,19 @@
 # URLS:
-#   POST /hubot/gh-commits?room=<room>[&type=<type>]
+#   POST /hubot/gh-commits?room=<room>
 
-querystring = require "querystring"
-url = require "url"
+{parseQuery} = require "../lib/utils"
 
 module.exports = (robot) ->
     robot.router.post "/hubot/gh-commits", (req, res) ->
         res.end()
 
         payload = JSON.parse req.body.payload
-        message = []
 
+        message = []
         message.push "пришли новые коммиты от #{payload.commits[0].author.name} в #{payload.repository.name}"
 
         for commit in payload.commits
             message.push "    * #{commit.message} (#{commit.url})"
 
-        parsedUrl = url.parse req.url
-        query = querystring.parse parsedUrl.query
-
-        user = {}
-        user.room = query.room if query.room
-        user.type = query.type if query.type
-
-        robot.send user, message.join "\n"
+        query = parseQuery req.url
+        robot.send {room: query.room}, message.join "\n"

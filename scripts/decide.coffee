@@ -1,7 +1,7 @@
 # Commands:
 #   вась выбери между <а>, <б> и <в>
 
-_ = require "underscore"
+_ = require "lodash"
 
 definitely = [
     "однозначно"

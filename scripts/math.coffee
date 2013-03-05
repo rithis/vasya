@@ -12,4 +12,4 @@ module.exports = (robot) ->
         req.get() (err, res, body) ->
             # Response includes non-string keys, so we can't use JSON.parse here.
             json = eval("(#{body})")
-            msg.send json.rhs || "не могу посчитать"
+            msg.send json.rhs or "не могу посчитать"

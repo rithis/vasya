@@ -13,21 +13,18 @@ module.exports = (robot) ->
         imageMe msg, msg.match[1], true, (err, url) ->
             msg.send url
 
-    mustachify = (url) ->
-        type = Math.floor Math.random() * 3
-        "http://mustachify.me/#{type}?src=#{url}"
-
     robot.respond /покажи усат(ого|ую|ых|ое) (.*)/i, (msg) ->
-        query = msg.match[2]
-
-        imageMe msg, query, false, true, (err, url) ->
+        imageMe msg, msg.match[2], false, true, (err, url) ->
             msg.send mustachify url
 
-    robot.respond /добавь усов к (.*)/i, (msg) ->
-        url = msg.match[1]
-        msg.send mustachify url
+    robot.respond /добавь усов (к|в|на) (.*)/i, (msg) ->
+        msg.send mustachify msg.match[1]
 
-module.exports.imageMe = imageMe = (msg, query, animated, faces, callback) ->
+mustachify = (url) ->
+    type = Math.floor Math.random() * 3
+    "http://mustachify.me/#{type}?src=#{url}"
+
+imageMe = (msg, query, animated, faces, callback) ->
     callback = animated if typeof animated is "function"
     callback = faces if typeof faces is "function"
 
@@ -43,4 +40,4 @@ module.exports.imageMe = imageMe = (msg, query, animated, faces, callback) ->
 
         if images?.length > 0
             image = msg.random images
-            callback null, image.unescapedUrl
+            callback image.unescapedUrl

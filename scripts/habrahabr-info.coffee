@@ -6,8 +6,7 @@ module.exports = (robot) ->
         req = msg.http msg.match[1]
         req.get() (err, res, body) ->
             mathes = body.match /<title>(.*)<\/title>/
-            title = mathes?[1]
 
-            if title
-                title = title.split("/")[0].trim()
+            if mathes
+                title = mathes?[1].split("/")[0].trim()
                 msg.send "Хабрахабр: #{title}"

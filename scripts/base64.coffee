@@ -4,9 +4,9 @@
 
 module.exports = (robot) ->
     robot.respond /(.*) в base64/i, (msg) ->
-        buf = new Buffer msg.match[1]
-        msg.send buf.toString "base64"
+        buffer = new Buffer msg.match[1]
+        msg.send buffer.toString "base64"
 
     robot.respond /(.*) из base64/i, (msg) ->
-        buf = new Buffer msg.match[1], "base64"
-        msg.send buf.toString "utf8"
+        buffer = new Buffer msg.match[1], "base64"
+        msg.send buffer.toString "utf8"

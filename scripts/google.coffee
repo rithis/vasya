@@ -3,11 +3,10 @@
 
 module.exports = (robot) ->
     robot.respond /погугли (.*)/i, (msg) ->
-        query = msg.match[1]
-        googleMe msg, query, (url) ->
+        googleMe msg, msg.match[1], (url) ->
             msg.send url
 
-module.exports.googleMe = googleMe = (msg, query, callback) ->
+googleMe = (msg, query, callback) ->
     req = msg.http "http://www.google.com/search"
     req.query q: query
     req.get() (err, res, body) ->
