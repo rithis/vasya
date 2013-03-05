@@ -1,9 +1,11 @@
 # Commands:
 #   фейспалм
 
+{isRobotMessage} = require "../lib/utils"
+
 module.exports = (robot) ->
     robot.hear /(facepalm|фейспалм)/i, (msg) ->
-        unless msg.message.user.name is robot.name
+        unless isRobotMessage msg, robot
             facepalmMe msg, (url) ->
                 msg.send url
 
