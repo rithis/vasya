@@ -3,11 +3,46 @@
 #   вась какие конфигурации есть в TeamCity?
 #   вась перечисли последние билды <конфигурация>
 #   вась запусти билд <конфигурация>
+#
+# URLs:
+#   POST /hubot/teamcity?buildTypeName=<buildTypeName>&buildNumber=<buildNumber>&room=<room>
 
+{parseQuery} = require "../lib/utils"
+async = require "async"
 util = require "util"
 _ = require "lodash"
 
 module.exports = (robot) ->
+    robot.router.post "/hubot/teamcity", (req, res) ->
+        res.end()
+        query = parseQuery req.url
+
+        attempts = 0
+        build = null
+
+        test = ->
+            attempts >= 10 or build?.finishDate
+
+        worker = (callback) ->
+            fetcher = ->
+                getBuild robot, query.buildTypeName, query.buildNumber, (err, body) ->
+                    attempts += 1
+                    build = body if body
+                    callback()
+
+            setTimeout fetcher, 1000
+
+        async.until test, worker, ->
+            if build?.finishDate
+                message = []
+                message.push "завершен"
+                message.push if build.status is "SUCCESS" then "рабочий" else "сломанный"
+                message.push "билд ##{build.number}"
+                message.push "от бранча #{build.branchName}"
+                message.push "конфигурации #{build.buildType.name}:"
+                message.push build.webUrl
+                robot.send {room: query.room}, message.join " "
+
     robot.respond /(какие )?проекты (есть )?(в )?TeamCity\??/i, (msg) ->
         getProjects msg, (err, projects) ->
             return msg.send "нет проектов" unless projects
@@ -88,17 +123,21 @@ getBuildTypes = (msg, callback) ->
     fetch msg, url, (err, body) ->
         callback err, body?.buildType or null
 
-getBuilds = (msg, id, callback) ->
-    url = "http://#{hostname}/httpAuth/app/rest/buildTypes/name:#{encodeURI id}/builds?locator=lookupLimit:5,running:any"
+getBuilds = (msg, buildTypeName, callback) ->
+    url = "http://#{hostname}/httpAuth/app/rest/buildTypes/name:#{encodeURI buildTypeName}/builds?locator=lookupLimit:5,running:any"
     fetch msg, url, (err, body) ->
         callback err, body?.build or null
 
-getBuildTypeId = (msg, name, callback) ->
+getBuild = (msg, buildTypeName, buildNumber, callback) ->
+    url = "http://#{hostname}/httpAuth/app/rest/buildTypes/name:#{encodeURI buildTypeName}/builds/number:#{buildNumber}"
+    fetch msg, url, callback
+
+getBuildTypeId = (msg, buildTypeName, callback) ->
     getBuildTypes msg, (err, buildTypes) ->
         return callback err if err
 
         buildType = _.find buildTypes, (buildType) ->
-            buildType.name is name
+            buildType.name is buildTypeName
 
         callback null, buildType?.id or null
 
