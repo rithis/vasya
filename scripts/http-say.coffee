@@ -1,5 +1,5 @@
 # URLs:
-#   GET /hubot/say?message=<message>&room=<room>[&type=<type>]
+#   GET /hubot/say?message=<message>&room=<room>
 
 {parseQuery} = require "../lib/utils"
 
