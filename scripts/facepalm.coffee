@@ -4,7 +4,7 @@
 {isRobotMessage} = require "../lib/utils"
 
 module.exports = (robot) ->
-    robot.hear /(facepalm|фейспалм)/i, (msg) ->
+    robot.hear /(?:^|\s)(facepalm|фейспалм)(?:\s|$)/i, (msg) ->
         unless isRobotMessage msg, robot
             facepalmMe msg, (url) ->
                 msg.send url
