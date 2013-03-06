@@ -6,15 +6,15 @@
 
 module.exports = (robot) ->
     robot.respond /с?кинь картинку об? (.*)/i, (msg) ->
-        imageMe msg, msg.match[1], (err, url) ->
+        imageMe msg, msg.match[1], (url) ->
             msg.send url
 
     robot.respond /с?кинь гифку об? (.*)/i, (msg) ->
-        imageMe msg, msg.match[1], true, (err, url) ->
+        imageMe msg, msg.match[1], true, (url) ->
             msg.send url
 
     robot.respond /покажи усат(ого|ую|ых|ое) (.*)/i, (msg) ->
-        imageMe msg, msg.match[2], false, true, (err, url) ->
+        imageMe msg, msg.match[2], false, true, (url) ->
             msg.send mustachify url
 
     robot.respond /добавь усов (к|в|на) (.*)/i, (msg) ->
