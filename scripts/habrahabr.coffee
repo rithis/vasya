@@ -15,7 +15,7 @@ module.exports = (robot) ->
 
     listener.sync()
 
-    listener.on "synced", ->
+    listener.once "synced", ->
         listener.on "new", (article) ->
             robot.send {room: room}, "Новый пост на Хабре: #{template article}"
 
