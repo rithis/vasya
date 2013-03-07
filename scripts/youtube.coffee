@@ -16,5 +16,4 @@ videoMe = (msg, query, callback) ->
         videos = videos?.feed?.entry
 
         if videos?.length > 0
-            video = msg.random videos
-            callback video.link[0].href
+            callback videos[0].link[0].href
