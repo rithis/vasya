@@ -1,5 +1,5 @@
-# Dependencies:
-#   feedparser
+# Commands:
+#   вась покажи свежие посты на Хабре
 
 feedparser = require "feedparser"
 events = require "events"
@@ -17,30 +17,41 @@ module.exports = (robot) ->
 
     listener.on "synced", ->
         listener.on "new", (article) ->
-            message = "Новый пост на Хабре: #{article.title} от #{article.author}: #{article.link}"
-            robot.send {room: room}, message
+            robot.send {room: room}, "Новый пост на Хабре: #{template article}"
 
         listener.run period
+
+        robot.respond /покажи свежие посты на Хабре/i, (msg) ->
+            message = []
+
+            for article in listener.cache
+                message.push template article
+
+            msg.send message.join "\n"
+
+
+template = (article) ->
+    "#{article.title} от #{article.author}: #{article.link}"
 
 
 class FeedListener extends events.EventEmitter
     constructor: (@url) ->
-        @guids = []
+        @cache = []
 
     sync: ->
-        guids = []
+        cache = []
         parser = feedparser.parseUrl @url
 
         parser.on "article", (article) =>
-            guids.push article.guid
-            exists = _.filter @guids, (guid) ->
-                article.guid is guid
+            cache.push article
+            exists = _.filter @cache, (cachedArticle) ->
+                article.guid is cachedArticle.guid
 
             if exists.length is 0
                 @emit "new", article
 
         parser.on "end", =>
-            @guids = guids
+            @cache = cache
             @emit "synced"
 
     run: (period = 10000) ->
