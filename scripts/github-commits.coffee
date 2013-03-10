@@ -9,6 +9,8 @@ module.exports = (robot) ->
 
         payload = JSON.parse req.body.payload
 
+        payload.commits.reverse()
+
         message = []
         message.push "пришли новые коммиты от #{payload.commits[0].author.name} в #{payload.repository.name}"
 
