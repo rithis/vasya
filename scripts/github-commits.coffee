@@ -13,7 +13,7 @@ module.exports = (robot) ->
         message.push "пришли новые коммиты от #{payload.commits[0].author.name} в #{payload.repository.name}"
 
         for commit in payload.commits
-            message.push "    * #{commit.message} (#{commit.url})"
+            message.push "    * #{commit.message.split("\n")[0]} (#{commit.url})"
 
         query = parseQuery req.url
         robot.send {room: query.room}, message.join "\n"
