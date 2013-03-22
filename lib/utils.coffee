@@ -29,6 +29,6 @@ module.exports.rssFetcher = (options) ->
         message = []
 
         for article in listener.cache
-          message.push template article
+          message.push options.template article
 
         msg.send message.join "\n"
