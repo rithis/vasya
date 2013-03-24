@@ -5,6 +5,7 @@
 , "dependencies": {
     "hubot": "~2.4"
   , "hubot-skype": "~0.0"
+  , "hubot-scripts": "git://github.com/github/hubot-scripts.git#master"
   , "lodash": "~1.0"
   , "async": "~0.2"
   , "feedparser": "~0.13"
