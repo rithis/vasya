@@ -1,16 +1,20 @@
-feedparser = require "feedparser"
+FeedParser = require "feedparser"
+request = require "request"
 events = require "events"
+fs = require "fs"
 
 
 class FeedListener extends events.EventEmitter
   constructor: (@url) ->
   sync: ->
     if /^http/.test @url
-      parser = feedparser.parseUrl @url
+      stream = request @url
     else
-      parser = feedparser.parseFile @url
+      stream = fs.createReadStream @url
 
-    parser.on "article", (article) =>
+    parser = stream.pipe(new FeedParser)
+
+    parser.on "meta", (article) =>
       @emit "article", article
 
     parser.on "end", =>
