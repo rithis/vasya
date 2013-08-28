@@ -1,7 +1,6 @@
 FeedListener = require "./feed_listener"
 querystring = require "querystring"
 url = require "url"
-_ = require "lodash"
 
 robotNames = process.env.HUBOT_NAMES or ""
 robotNames = robotNames.split ","
@@ -24,7 +23,7 @@ module.exports.rssFetcher = (options) ->
     firstRun = true
 
     listener.on "article", (article) ->
-      exists = _.filter feed.articles, (archivedArticle) ->
+      exists = feed.articles.filter (archivedArticle) ->
         article.guid == archivedArticle.guid
 
       if exists.length == 0
@@ -67,7 +66,7 @@ module.exports.rssFetcher = (options) ->
       feed.rooms.push msg.message.room unless msg.message.room in feed.rooms
 
     robot.respond options.offRegexp, (msg) ->
-      feed.rooms = _.filter feed.rooms, (room) ->
+      feed.rooms = feed.rooms.filter (room) ->
         msg.message.room isnt room
 
     robot.respond options.checkRegexp, (msg) ->
