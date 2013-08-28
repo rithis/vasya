@@ -43,8 +43,14 @@ module.exports.rssFetcher = (options) ->
     listener.once "end", ->
       firstRun = false
 
-    robot.brain.once "loaded", ->
-      listener.run options.period
+    loaded = false
+    runListener = ->
+      unless loaded
+        loaded = true
+        listener.run options.period
+
+    robot.brain.once "loaded", runListener
+    setTimeout runListener, 1000
 
     robot.brain.on "loaded", ->
       feed = robot.brain.data.feeds[options.name]

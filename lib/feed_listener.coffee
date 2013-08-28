@@ -14,7 +14,7 @@ class FeedListener extends events.EventEmitter
 
     parser = stream.pipe(new FeedParser)
 
-    parser.on "meta", (article) =>
+    parser.on "data", (article) =>
       @emit "article", article
 
     parser.on "end", =>
