@@ -1,4 +1,1 @@
-export HUBOT_TEAMCITY_USERNAME=username
-export HUBOT_TEAMCITY_PASSWORD=password
-export HUBOT_TEAMCITY_HOSTNAME=teamcity.rithis.com
 node_modules/.bin/hubot -n Вась -a skype
