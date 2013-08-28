@@ -1,13 +1,13 @@
 {
   "name": "vasya"
-, "version": "0.0.0"
+, "version": "0.1.0"
 , "description": "Skype Chat Bot"
 , "dependencies": {
     "hubot": "~2.6"
   , "hubot-skype": "~0.0"
-  , "hubot-scripts": "git://github.com/github/hubot-scripts.git#master"
+  , "hubot-scripts": "~2.5"
   , "ent": "~0.1"
   , "feedparser": "~0.16"
-  , "request": "~2.22"
+  , "request": "~2.27"
   }
 }
