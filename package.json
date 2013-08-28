@@ -6,6 +6,7 @@
     "hubot": "~2.6"
   , "hubot-skype": "~0.0"
   , "hubot-scripts": "git://github.com/github/hubot-scripts.git#master"
+  , "ent": "~0.1"
   , "lodash": "~1.3"
   , "async": "~0.2"
   , "feedparser": "~0.16"

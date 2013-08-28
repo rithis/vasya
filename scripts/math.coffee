@@ -1,6 +1,8 @@
 # Commands:
 #   вась посчитай <выражение>
 
+ent = require "ent"
+
 module.exports = (robot) ->
   robot.respond /посчитай (.*)/i, (msg) ->
     req = msg.http "https://www.google.com/ig/calculator"
@@ -12,4 +14,10 @@ module.exports = (robot) ->
     req.get() (err, res, body) ->
       # Response includes non-string keys, so we can't use JSON.parse here.
       json = eval("(#{body})")
-      msg.send json.rhs or "не могу посчитать"
+      if json.rhs
+        console.log json
+        res = json.rhs.replace(/<sup>([^<]+)<\/sup>/, "^$1")
+        msg.send ent.decode res
+      else
+        msg.send "не могу посчитать"
+
