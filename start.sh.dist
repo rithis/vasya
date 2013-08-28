@@ -1,1 +1,2 @@
+export HUBOT_NAMES=rithis.hubot
 node_modules/.bin/hubot -n Вась -a skype
