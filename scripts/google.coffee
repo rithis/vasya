@@ -11,4 +11,4 @@ googleMe = (msg, query, callback) ->
   req.query q: query
   req.get() (err, res, body) ->
     matches = body.match /class="r"><a href="\/url\?q=([^"]*)(&amp;sa.*)">/
-    callback decodeURI matches?[1] if matches?[1]
+    callback decodeURIComponent matches[1] if matches?[1]
