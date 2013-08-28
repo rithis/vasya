@@ -1,8 +1,6 @@
 # Commands:
 #   вась выбери между <а>, <б>, <в>
 
-_ = require "lodash"
-
 definitely = [
   "однозначно"
   "конечно"
@@ -13,7 +11,7 @@ definitely = [
 module.exports = (robot) ->
   robot.respond /выбери(:| между) (.*)/i, (msg) ->
     options = msg.match[2].split ","
-    options = _.map options, (option) ->
+    options = options.map (option) ->
       option.trim()
 
     msg.reply "#{msg.random definitely} #{msg.random options}"
