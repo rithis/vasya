@@ -1,2 +1,9 @@
 export HUBOT_NAMES=rithis.hubot
+export HUBOT_PINGER_ROOM='#alexanderasmirnov/$a.alfimov;51adf2bfd1435386'
+export HUBOT_PINGER_USER="anton.a.vasilyev"
+export HUBOT_PINGER_CRON="0 15,20 * * 1-5"
+export HUBOT_PINGER_NEXT_MESSAGE_INTERVAL=420000
+export HUBOT_PINGER_FIRST_MESSAGE="Антон, скинь статус"
+export HUBOT_PINGER_NEXT_MESSAGE="Антон, нужен статус"
+export HUBOT_PINGER_OK_MESSAGE="Ок, сойдет за статус"
 node_modules/.bin/hubot -n Вась -a skype
