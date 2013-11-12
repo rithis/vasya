@@ -8,6 +8,7 @@ childProcess = require "child_process"
 module.exports = (robot) ->
   process = null
   interval = null
+  timeout = null
 
   robot.respond /деплой( тихо)?/i, (msg) ->
     silent = msg.match[1] and msg.match[1].length > 0
@@ -36,6 +37,22 @@ module.exports = (robot) ->
       unless silent
         clearInterval interval
         interval = null
+
+      clearTimeout timeout
+      timeout = null
+
+    timeout = setTimeout ->
+      msg.reply "деплой отвалился по таймауту"
+
+      process.kill "SIGKILL"
+      process = null
+
+      unless silent
+        clearInterval interval
+        interval = null
+
+      timeout = null
+    , 1000 * 60 * 10
 
     unless silent
       output = ""
