@@ -22,4 +22,5 @@ module.exports = (robot) ->
       clearInterval interval
       interval = null
 
-  (new cron.CronJob process.env.HUBOT_PINGER_CRON, doPing).start()
+  job = new cron.CronJob process.env.HUBOT_PINGER_CRON, doPing, null, false, "Europe/Moscow"
+  job.start()
