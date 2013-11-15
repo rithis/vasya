@@ -25,3 +25,4 @@ module.exports = (robot) ->
     if query.deploy
       deploy (text) ->
         robot.send {room: query.room}, text
+      , true
