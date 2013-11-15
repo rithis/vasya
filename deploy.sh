@@ -8,6 +8,7 @@ cp .ftppass deploy
 
 cd deploy
 
+git reset --hard
 git pull origin master
 
 npm install
