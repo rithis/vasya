@@ -1,6 +1,4 @@
 # Commands:
-#   вась деплой
-#   вась деплой тихо
 
 
 deploy = require "../lib/deploy"
