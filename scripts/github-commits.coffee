@@ -1,7 +1,9 @@
 # URLS:
 #   POST /hubot/gh-commits?room=<room>
+#   POST /hubot/gh-commits?room=<room>&deploy=true
 
 {parseQuery} = require "../lib/utils"
+deploy = require "../lib/deploy"
 
 module.exports = (robot) ->
   robot.router.post "/hubot/gh-commits", (req, res) ->
@@ -19,3 +21,7 @@ module.exports = (robot) ->
 
     query = parseQuery req.url
     robot.send {room: query.room}, message.join "\n"
+
+    if query.deploy
+      deploy (text) ->
+        robot.send {room: query.room}, text
