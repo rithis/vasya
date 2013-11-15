@@ -10,7 +10,7 @@ interval = null
 timeout = null
 
 
-deploy = (message, silent = false) ->
+module.exports = (message, silent = false) ->
   if deployProcess isnt null
     message "деплой уже идет"
     return
