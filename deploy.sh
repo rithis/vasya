@@ -16,5 +16,7 @@ npm install
 grunt deploy
 
 cd .tmp
+rm -rf ../../markup
+cp -r markup ../..
 zip -9r markup.zip markup
-cp markup.zip markup
+cp markup.zip ../../markup
