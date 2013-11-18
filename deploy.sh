@@ -14,3 +14,7 @@ git pull origin master
 npm install
 
 grunt deploy
+
+cd deploy/.tmp
+zip -9r markup.zip markup
+cp markup.zip markup
